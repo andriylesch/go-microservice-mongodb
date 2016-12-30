@@ -13,9 +13,39 @@ In current application MongoDb was installed on local system.
 How you can do it, you can find detail information 
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
+##Generate JSON 
+There is [JSON generator] (http://www.json-generator.com/) website. which allows to developer generate random JSON. 
+For this test app was created JSON template :
+```go
+[
+  '{{repeat(5, 7)}}',
+  {
+    _id: '{{objectId()}}',
+    nick : '{{company()}}',
+    email: '{{email()}}',
+    firstname: '{{firstName()}}',
+    lastname: '{{surname()}}',
+    phone: '+1 {{phone()}}'
+  }
+]
+```
+
 ##Building a REST API
 
-For full CRUD logic was implemented list of methods :
+All CRUD logic use one custom `User` type:
+
+```go
+type User struct {
+	Id        string `bson:"_id" json:"id"`
+	Nick      string `bson:"nick" json:"nick"`
+	Email     string `bson:"email" json:"email"`
+	FirstName string `bson:"firstname" json:"firstname"`
+	LastName  string `bson:"lastname" json:"lastname"`
+	Phone     string `bson:"phone" json:"phone"`
+}
+```
+
+List of methods :
 
 ```go
 
@@ -36,7 +66,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request)  { ... }
 
 ```
 
-Endpoints for GetUsers method :
+Endpoints for `GetUsers` method :
 ```go
     http://localhost:8080/users -GET
 ```
@@ -55,8 +85,9 @@ result will be as
     ...
 ]    
 ```
+#
 
-Endpoints for GetUserById method :
+Endpoints for `GetUserById` method :
 ```go
     http://localhost:8080/users/<userId> -GET
 ```
@@ -72,8 +103,9 @@ result will be as
         "phone": "+1 (893) 574-2359"
     } 
 ```
+#
 
-Endpoints for PostUser method :
+Endpoints for `PostUser` (Insert new user) method :
 ```go
     http://localhost:8080/users -POST
 ```
@@ -92,28 +124,53 @@ result will be as
 ```go
   Http status : 201 (Created)
 ```
+#
 
-Endpoints for PostUser method :
+Endpoints for `PutUser` (Update user) method :
 ```go
-    http://localhost:8080/users -POST
+    http://localhost:8080/users/<userId> -PUT
+```
+
+JSON parameter
+```go
+{
+   "nick": "testnick123",
+   "email": "test@gmail.com",
+   "firstname": "testFN",
+   "lastname": "testLN",
+   "phone": "+0 (000) 000-123445"
+}
 ```
 
 result will be as
 ```go
-  Http status : 201 (Created)
+  Http status : 200 (OK)
 ```
 
+#
 
+Endpoints for `DeleteUser` method :
+```go
+    http://localhost:8080/users/<userId> -DELETE
+```
 
+result will be as
+```go
+  Http status : 204 (no content)
+```
 
+##Reference
 
+JSON generator
+- http://www.json-generator.com/
 
-- 
+MongoDB
+- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+- https://mongobooster.com/downloads - allows to manage MongoDB. 
 
-
-
-
-
-
-
+Go language
+- http://thenewstack.io/make-a-restful-json-api-go/
+- https://stevenwhite.com/building-a-rest-service-with-golang-1/
+- https://stevenwhite.com/building-a-rest-service-with-golang-2/
+- https://stevenwhite.com/building-a-rest-service-with-golang-1/
 
