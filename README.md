@@ -166,7 +166,7 @@ JSON generator
 
 MongoDB
 - https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
-- https://mongobooster.com/downloads - allows to manage MongoDB. 
+- https://mongobooster.com/downloads - allows to manage MongoDB databases. 
 
 Go language
 - http://thenewstack.io/make-a-restful-json-api-go/
